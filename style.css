@@ -1,0 +1,65 @@
+* {
+  font-family: "IBM Plex", "Helvetica", sans-serif;
+}
+
+#mainContainer {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(3, 100px);
+}
+
+.item {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 16px;
+}
+
+.grey {
+  color: darkGrey;
+  background-color: grey;
+}
+
+.hidden {
+  display: none;
+}
+
+.info {
+  text-align: center;
+}
+
+#instructions {
+  font-weight: 100;
+}
+#instructions span {
+  font-size: 16px;
+}
+
+.number {
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.bottomDivs {
+	text-align: center;
+	width: 50%;
+	margin: auto;
+}
+
+#statsDiv {
+	font-size: 20px;
+}
+
+#resetBtn {
+	margin-top: 10px;
+	margin-bottom: 20px;
+	border: solid 2px black;
+}
+
+#resetBtn:hover {
+	background-color: #cccccc;
+}
+
+span {
+	font-weight: bold;
+}
