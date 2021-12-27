@@ -37,6 +37,13 @@
   border: solid 1px black;
 }
 
+.item-noclick {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 16px;
+  border: solid 1px black;
+}
+
 .grey {
   color: white;
   font-weight: bold;
@@ -90,4 +97,10 @@ span {
 
 .winner {
   background-color: gold;
+}
+
+.winner-span {
+  color: darkgreen;
+  font-weight: bold;
+  font-size: 24px;
 }

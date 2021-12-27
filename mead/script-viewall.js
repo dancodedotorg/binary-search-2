@@ -32,6 +32,16 @@ tickets100Elt.addEventListener('click', e => {
 	reset();
 })
 
+//https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
+const shuffleArray = array => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+}
+
 var score = -1;
 let total = 0;
 
@@ -92,7 +102,7 @@ function updateScores() {
 	}
 	scoresList.push(score);
 	scoresList.sort((a, b) => a - b);
-	console.log(scoresList);
+	//console.log(scoresList);
 
 
 
@@ -105,10 +115,9 @@ function updateScores() {
 function reset() {
 	updateScores();
 	score = 0;
+	total = 0;
 	scoreElement.innerHTML = score
-	winningNum = randBetween(10, 90);
-	randChoice = randBetween(0, 2);
-	includesWinner = randBetween(0, 7);
+	includesWinner = randBetween(0, 2); //1 in 3 chance it includes winner
 	main.innerHTML = "";
 	main.classList.remove("tickets-5");
 	main.classList.remove("tickets-21");
@@ -123,32 +132,25 @@ function reset() {
 		main.classList.add("tickets-100");
 	}
 
-	if(randChoice == 0) {
-		//random distribution
-		nums = Array.from({length: numTickets}, () => randBetween(0, 99));
-		if(includesWinner == 0) {
-			nums[0] = winningNum;
+	nums = Array.from({length: numTickets}, () => randBetween(1, 99));
+	let sum = nums.reduce(function (a, b) {
+	  return a + b;
+	}, 0);
+	winningNum = randBetween(1, sum);
+	//if(includesWinner == 0 || true) { //DEBUG
+	if(includesWinner == 0) {
+		let numsCopy = [...nums];
+		//console.log(numsCopy)
+		shuffleArray(numsCopy);
+		//console.log(numsCopy);
+		let numElts = randBetween(1, numsCopy.length-1);
+		let sum = 0;
+		for(let i = 0; i < numElts; i++) {
+			sum += numsCopy[i];
 		}
-		nums.sort((a, b) => a - b);
+		winningNum = sum;
 	}
-	if(randChoice == 1) {
-		//skewed higher, but winningNum in lower half
-		nums = Array.from({length: numTickets}, () => randBetween(40, 99));
-		winningNum = randBetween(40, 60);
-		if(includesWinner == 0) {
-			nums[0] = winningNum;
-		}
-		nums.sort((a, b) => a - b);
-	}
-	if(randChoice == 2) {
-		//skewed lower
-		nums = Array.from({length: numTickets}, () => randBetween(0, 60));
-		winningNum = randBetween(40, 60);
-		if(includesWinner == 0) {
-			nums[0] = winningNum;
-		}
-		nums.sort((a, b) => a - b);
-	}
+
 	winningNumElt.innerHTML = winningNum;
 
 	//let nums = Array.from({length: numTickets}, () => Math.floor(Math.random() * 100)).sort((a, b) => a - b);
@@ -179,6 +181,12 @@ function reset() {
 			//child.classList.add('grey');
 			//child.classList.remove("winner");
 			//child.childNodes[1].classList.add('hidden');
+		}
+
+		if(total == winningNum) {
+			totalElement.classList.add("winner-span");
+		} else {
+			totalElement.classList.remove("winner-span");
 		}
 	  })
 	  //console.log("child")
