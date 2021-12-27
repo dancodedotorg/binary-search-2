@@ -7,6 +7,11 @@
   grid-gap: 10px;
 }
 
+.main-index {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(1, 100px);
+}
+
 .tickets-5 {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: repeat(1, 100px);

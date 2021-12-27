@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1 id="title" class="info">Lottery Tickets</h1>
+    <h3 id="instructions" class="info">A group of people have all bought lottery tickets, but are keeping their tickets hidden. <br /> The winning number is <span id="winningSpan"></span> <br> <br>
+      Click on a tile to reveal the lottery ticket. <br>
+      <span>Try to find a winning ticket (or prove there is no winner) in as few clicks as possible </span></h3>
+    <h3 id="scoreContainer" class="info">Score: <span id="score">0</span></h3>
+    <div id="mainContainer">
+
+    </div>
+  	<div id="resetBtn" class="bottomDivs">
+  	   <h1>Again!</h1>
+  	</div>
+    <div id="ticketsButtons" class="bottomDivs">
+      <div id="tickets5Button" class="item">5 Tickets</div>
+      <div id="tickets21Button" class="item">21 Tickets</div>
+      <div id="tickets100Button" class="item">100 Tickets</div>
+    </div>
+  	<div id="statsDiv" class="bottomDivs">
+  	   Best Score: <span id="bestScoreSpan"></span> | Mode Score: <span id="modeScoreSpan"></span> | Median Score: <span id="medianScoreSpan"></span> | Worst Score: <span id="worstScoreSpan"></span>
+  	</div>
+
+    <script type="text/javascript" src="script-sorted.js"></script>
+  </body>
+</html>
