@@ -44,6 +44,7 @@ const shuffleArray = array => {
 
 var score = -1;
 let total = 0;
+let clicked = 0;
 
 let nums;
 let children;
@@ -116,6 +117,7 @@ function reset() {
 	updateScores();
 	score = 0;
 	total = 0;
+	clicked = 0;
 	scoreElement.innerHTML = score;
 	totalElement.innerHTML = total;
 	totalElement.classList.remove("winner-span");
@@ -135,22 +137,16 @@ function reset() {
 	}
 
 	nums = Array.from({length: numTickets}, () => randBetween(1, 99));
-	let sum = nums.reduce(function (a, b) {
-	  return a + b;
-	}, 0);
-	winningNum = randBetween(1, sum);
+	let numsCopy = [...nums];
+	numsCopy.sort((a, b) => a - b);
+	let maxSum = numsCopy[0] + numsCopy[1];
+	let minVal = numsCopy[numsCopy.length - 1];
+	winningNum = randBetween(minVal, maxSum);
 	//if(includesWinner == 0 || true) { //DEBUG
 	if(includesWinner == 0) {
-		let numsCopy = [...nums];
-		//console.log(numsCopy)
 		shuffleArray(numsCopy);
 		//console.log(numsCopy);
-		let numElts = randBetween(1, numsCopy.length-1);
-		let sum = 0;
-		for(let i = 0; i < numElts; i++) {
-			sum += numsCopy[i];
-		}
-		winningNum = sum;
+		winningNum = numsCopy[0] + numsCopy[1];
 	}
 
 	winningNumElt.innerHTML = winningNum;
@@ -172,17 +168,21 @@ function reset() {
 		  child.classList.remove('winner')
 			total -= val * 1
 			totalElement.innerHTML = total
+			clicked--;
 		  //console.log(score)
 		} else {
-			child.classList.add('winner')
-		  score += 1
-		  scoreElement.innerHTML = score
-			total += val * 1
-			totalElement.innerHTML = total
-			//THIS PART LETS YOU UNSELECT
-			//child.classList.add('grey');
-			//child.classList.remove("winner");
-			//child.childNodes[1].classList.add('hidden');
+			if(clicked < 2) {
+				child.classList.add('winner')
+				score += 1
+				scoreElement.innerHTML = score
+				total += val * 1
+				totalElement.innerHTML = total
+				clicked++;
+				//THIS PART LETS YOU UNSELECT
+				//child.classList.add('grey');
+				//child.classList.remove("winner");
+				//child.childNodes[1].classList.add('hidden');
+			}
 		}
 
 		if(total == winningNum) {
