@@ -114,7 +114,7 @@ function reset() {
 	score = 0;
 	scoreElement.innerHTML = score
 	winningNum = randBetween(10, 90);
-	includesWinner = randBetween(0, 3);
+	includesWinner = randBetween(0, 2);
 	main.innerHTML = "";
 	main.classList.remove("tickets-5");
 	main.classList.remove("tickets-21");

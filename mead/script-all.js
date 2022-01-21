@@ -52,6 +52,7 @@ let winningNum;
 let randChoice;
 let includesWinner;
 var numTickets = 21;
+let stillPlaying = true;
 
 let bestSpan = document.querySelector("#bestScoreSpan");
 let modeSpan = document.querySelector("#modeScoreSpan");
@@ -116,10 +117,11 @@ function reset() {
 	updateScores();
 	score = 0;
 	total = 0;
+	stillPlaying = true;
 	scoreElement.innerHTML = score;
 	totalElement.innerHTML = total;
 	totalElement.classList.remove("winner-span");
-	includesWinner = randBetween(0, 2); //1 in 3 chance it includes winner
+	includesWinner = randBetween(0, 1); //1 in 3 chance it includes winner
 	main.innerHTML = "";
 	main.classList.remove("tickets-5");
 	main.classList.remove("tickets-21");
@@ -148,6 +150,7 @@ function reset() {
 		let numElts = randBetween(1, numsCopy.length-1);
 		let sum = 0;
 		for(let i = 0; i < numElts; i++) {
+			//console.log(numsCopy[i]);
 			sum += numsCopy[i];
 		}
 		winningNum = sum;
@@ -160,21 +163,26 @@ function reset() {
 	const times = x => f => {if (x > 0) { f(); times (x - 1) (f)}}
 	// Call the times function to create all the on-screen elements
 	var i = 0
-	times (numTickets) (() => {main.innerHTML += `<div data-value="${nums[i]}" class="item"><div>Ticket Number ${i+1}</div><div class="number">${nums[i]}</span></div>`, i+=1})
+	times (numTickets) (() => {main.innerHTML += `<div data-value="${nums[i]}" class="item unselected"><div>Ticket Number ${i+1}</div><div class="number">${nums[i]}</span></div>`, i+=1})
 	// Create an array of random numbers
 
 	children = document.querySelectorAll(".item")
 	children.forEach(child => {
 	  child.addEventListener('click', e => {
+		if(!stillPlaying) {
+			return;
+		}
 		let val = child.getAttribute("data-value");
-		if (child.classList.contains('winner')) {
+		if (child.classList.contains('selected')) {
 		  //console.log(child.childNodes)
-		  child.classList.remove('winner')
+		  child.classList.remove('selected')
+			child.classList.add('unselected')
 			total -= val * 1
 			totalElement.innerHTML = total
 		  //console.log(score)
 		} else {
-			child.classList.add('winner')
+			child.classList.add('selected')
+			child.classList.remove('unselected')
 		  score += 1
 		  scoreElement.innerHTML = score
 			total += val * 1
@@ -187,6 +195,12 @@ function reset() {
 
 		if(total == winningNum) {
 			totalElement.classList.add("winner-span");
+			let selectedChildren = document.querySelectorAll(".selected");
+			selectedChildren.forEach(selectedChild => {
+				selectedChild.classList.remove("selected");
+				selectedChild.classList.add("winner");
+			})
+			stillPlaying = false;
 		} else {
 			totalElement.classList.remove("winner-span");
 		}

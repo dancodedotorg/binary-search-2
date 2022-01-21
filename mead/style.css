@@ -104,6 +104,14 @@ span {
   background-color: gold;
 }
 
+.selected {
+  background-color: white;
+}
+
+.unselected {
+  background-color: grey;
+}
+
 .winner-span {
   color: darkgreen;
   font-weight: bold;
